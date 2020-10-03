@@ -16,7 +16,7 @@
 
 #define PORT "3490" // the port client will be connecting to 
 #define BILLION 1000000000.0
-#define FILENAME "example_recieved.txt"
+
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
@@ -34,12 +34,13 @@ int main(int argc, char *argv[])
 	struct addrinfo hints, *servinfo, *p;
 	int rv;
 	char s[INET6_ADDRSTRLEN];
+	char *filename;
 
 	struct timespec start, end; 
 
-	if (argc != 2) 
+	if (argc != 3) 
 	{
-	    fprintf(stderr, "usage: client hostname\n");
+	    fprintf(stderr, "usage: client hostname filename\n");
 	    exit(1);
 	}
 
@@ -103,7 +104,7 @@ int main(int argc, char *argv[])
 	}
 
 	// Open file for writing recieved data to
-	FILE *recieved_fd = fopen("recieved.txt", "wb");
+	FILE *recieved_fd = fopen(argv[2], "wb");
 	if (recieved_fd == NULL)
 	{
 		perror("	Open() failed.");
