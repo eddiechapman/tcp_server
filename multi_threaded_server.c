@@ -40,7 +40,7 @@ void *connection_handler(void *socket_desc)
   else if (bytes_read == 0)
     printf("  pollserver: socket %d hung up\n", sock);
   
-  printf("  File has been requested\n");
+  printf("  File has been requested by socket %d\n", sock);
 
   FILE * fp = fopen("example.txt", "rb");
   
@@ -56,11 +56,12 @@ void *connection_handler(void *socket_desc)
       fclose(fp);
     }
   }
+  fclose(fp);
+
+  printf("  File delivered to socket %d\n", sock);
 
   close(sock);
     
-  printf("  File delivered to socket %d\n", sock);
-
   pthread_exit(NULL);
 }
 
